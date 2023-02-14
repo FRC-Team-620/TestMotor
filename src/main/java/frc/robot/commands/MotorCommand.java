@@ -40,7 +40,9 @@ public class MotorCommand extends CommandBase {
   public void execute() {
     //pidLoop.setSetpoint(1);
     //motorSubsystem.setSpeed(MathUtil.clamp(pidLoop.calculate(motorSubsystem.getEncoderCount()), -1, 1));
-    if(controller.a().getAsBoolean()){
+    //System.out.println("WORKKKKKK");
+    //motorSubsystem.setSpeed(0.4);
+    if(controller.a().getAsBoolean()) {
       motorSubsystem.setSpeed(0.4);
     }
     else {
@@ -53,6 +55,7 @@ public class MotorCommand extends CommandBase {
       }
       motorSubsystem.setSpeed(netSpeed);
     }
+    System.out.println(motorSubsystem.getEncoderCount());
     SmartDashboard.putNumber("PotVoltage", motorSubsystem.getPotVoltage());
   }
 

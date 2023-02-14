@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class MotorSubsystem extends SubsystemBase {
-  private CANSparkMax motor = new CANSparkMax(1, MotorType.kBrushless);
+  private CANSparkMax motor = new CANSparkMax(5, MotorType.kBrushless);
 
 
 
@@ -64,6 +64,8 @@ public class MotorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    //motor.set(0.3);
+    System.out.println(motor.get());
   }
 
   @Override
