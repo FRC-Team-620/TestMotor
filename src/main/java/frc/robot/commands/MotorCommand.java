@@ -42,8 +42,14 @@ public class MotorCommand extends CommandBase {
     //motorSubsystem.setSpeed(MathUtil.clamp(pidLoop.calculate(motorSubsystem.getEncoderCount()), -1, 1));
     //System.out.println("WORKKKKKK");
     //motorSubsystem.setSpeed(0.4);
-    if(controller.a().getAsBoolean()) {
-      motorSubsystem.setSpeed(0.4);
+    if (controller.a().getAsBoolean()) {
+      motorSubsystem.setSolenoid1(!motorSubsystem.getStateSolenoid1());
+    }
+    if (controller.b().getAsBoolean()) {
+      motorSubsystem.setSolenoid2(!motorSubsystem.getStateSolenoid2());
+    }
+    if(controller.x().getAsBoolean()) {
+      motorSubsystem.setSpeed(-0.4);
     }
     else {
       double netSpeed = 0;//;

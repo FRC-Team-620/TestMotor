@@ -9,11 +9,17 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAnalogSensor.Mode;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class MotorSubsystem extends SubsystemBase {
-  private CANSparkMax motor = new CANSparkMax(5, MotorType.kBrushless);
+  private CANSparkMax motor = new CANSparkMax(6, MotorType.kBrushless);
+  private Solenoid solenoid1 = new Solenoid(42, PneumaticsModuleType.CTREPCM, 0);
+  private Solenoid solenoid2 = new Solenoid(42, PneumaticsModuleType.CTREPCM, 1);
+  private Compressor compressor = new Compressor(42, PneumaticsModuleType.REVPH);
 
 
 
@@ -23,6 +29,7 @@ public class MotorSubsystem extends SubsystemBase {
     motor.setSmartCurrentLimit(60);
     motor.setIdleMode(IdleMode.kBrake);
 
+    compressor.enableDigital();
   }
 
   public void setSpeed(double speed){
@@ -31,7 +38,20 @@ public class MotorSubsystem extends SubsystemBase {
   public double getEncoderCount() {
     return motor.getEncoder().getPosition();
   }
+  public void setSolenoid1(boolean state) {
+    solenoid1.set(state);
+  }
+  public void setSolenoid2(boolean state) {
+    solenoid2.set(state);
+  }
+  public boolean getStateSolenoid1() {
+    return solenoid1.get();
+  }
+  public boolean getStateSolenoid2() {
+    return solenoid2.get();
+  }
   public double getPotVoltage() {
+    //return motor.getAnalog(Mode.kAbsolute).getVoltage();
     return motor.getAnalog(Mode.kAbsolute).getVoltage();
   }
 
