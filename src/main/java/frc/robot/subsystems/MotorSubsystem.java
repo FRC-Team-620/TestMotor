@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class MotorSubsystem extends SubsystemBase {
   private CANSparkMax motor = new CANSparkMax(6, MotorType.kBrushless);
+  private CANSparkMax motor2 = new CANSparkMax(5, MotorType.kBrushless);
   private Solenoid solenoid1 = new Solenoid(42, PneumaticsModuleType.CTREPCM, 0);
   private Solenoid solenoid2 = new Solenoid(42, PneumaticsModuleType.CTREPCM, 1);
   private Compressor compressor = new Compressor(42, PneumaticsModuleType.REVPH);
@@ -26,14 +27,21 @@ public class MotorSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   public MotorSubsystem() {
     motor.setOpenLoopRampRate(0.2);
-    motor.setSmartCurrentLimit(60);
+    motor.setSmartCurrentLimit(20);
     motor.setIdleMode(IdleMode.kBrake);
 
+    motor2.setOpenLoopRampRate(0.2);
+    motor2.setSmartCurrentLimit(40);
+    motor2.setIdleMode(IdleMode.kCoast);
     compressor.enableDigital();
   }
 
   public void setSpeed(double speed){
-    motor.set(speed);
+    //motor.set(speed);
+    
+  }
+  public void setSpeed2(double speed) {
+    motor2.set(speed);
   }
   public double getEncoderCount() {
     return motor.getEncoder().getPosition();
@@ -54,7 +62,18 @@ public class MotorSubsystem extends SubsystemBase {
     //return motor.getAnalog(Mode.kAbsolute).getVoltage();
     return motor.getAnalog(Mode.kAbsolute).getVoltage();
   }
-
+  public double getPotPosition() {
+    //return motor.getAnalog(Mode.kAbsolute).getVoltage();
+    return motor.getAnalog(Mode.kAbsolute).getPosition();
+  }
+  public double getAbsEncoderVoltage() {
+    //return motor.getAnalog(Mode.kAbsolute).getVoltage();
+    return motor2.getAnalog(Mode.kAbsolute).getVoltage();
+  }
+  public double getAbsEncoderPosition() {
+    //return motor.getAnalog(Mode.kAbsolute).getVoltage();
+    return motor2.getAnalog(Mode.kAbsolute).getPosition();
+  }
 
 
   /**
