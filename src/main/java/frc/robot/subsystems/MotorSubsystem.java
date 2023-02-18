@@ -16,23 +16,27 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class MotorSubsystem extends SubsystemBase {
-  private CANSparkMax motor = new CANSparkMax(6, MotorType.kBrushless);
-  private CANSparkMax motor2 = new CANSparkMax(5, MotorType.kBrushless);
+  private CANSparkMax winchMotor = new CANSparkMax(6, MotorType.kBrushless);
+  private CANSparkMax pitchMotor = new CANSparkMax(5, MotorType.kBrushless);
+  private CANSparkMax grabberMotor = new CANSparkMax(7, MotorType.kBrushless);
   private Solenoid solenoid1 = new Solenoid(42, PneumaticsModuleType.CTREPCM, 0);
   private Solenoid solenoid2 = new Solenoid(42, PneumaticsModuleType.CTREPCM, 1);
   private Compressor compressor = new Compressor(42, PneumaticsModuleType.REVPH);
 
 
 
-  /** Creates a new ExampleSubsystem. */
+  /** Creates a new MotorSubsystem. */
   public MotorSubsystem() {
-    motor.setOpenLoopRampRate(0.2);
-    motor.setSmartCurrentLimit(20);
-    motor.setIdleMode(IdleMode.kBrake);
+    winchMotor.setOpenLoopRampRate(0.2);
+    winchMotor.setSmartCurrentLimit(40);
+    winchMotor.setIdleMode(IdleMode.kBrake);
 
-    motor2.setOpenLoopRampRate(0.2);
-    motor2.setSmartCurrentLimit(40);
-    motor2.setIdleMode(IdleMode.kCoast);
+    grabberMotor.setSmartCurrentLimit(20);
+    grabberMotor.setIdleMode(IdleMode.kBrake);
+    
+    pitchMotor.setOpenLoopRampRate(0.2);
+    pitchMotor.setSmartCurrentLimit(40);
+    pitchMotor.setIdleMode(IdleMode.kCoast);
     compressor.enableDigital();
   }
 
@@ -41,10 +45,10 @@ public class MotorSubsystem extends SubsystemBase {
     
   }
   public void setSpeed2(double speed) {
-    motor2.set(speed);
+    pitchMotor.set(speed);
   }
   public double getEncoderCount() {
-    return motor.getEncoder().getPosition();
+    return winchMotor.getEncoder().getPosition();
   }
   public void setSolenoid1(boolean state) {
     solenoid1.set(state);
@@ -60,19 +64,19 @@ public class MotorSubsystem extends SubsystemBase {
   }
   public double getPotVoltage() {
     //return motor.getAnalog(Mode.kAbsolute).getVoltage();
-    return motor.getAnalog(Mode.kAbsolute).getVoltage();
+    return winchMotor.getAnalog(Mode.kAbsolute).getVoltage();
   }
   public double getPotPosition() {
     //return motor.getAnalog(Mode.kAbsolute).getVoltage();
-    return motor.getAnalog(Mode.kAbsolute).getPosition();
+    return winchMotor.getAnalog(Mode.kAbsolute).getPosition();
   }
   public double getAbsEncoderVoltage() {
     //return motor.getAnalog(Mode.kAbsolute).getVoltage();
-    return motor2.getAnalog(Mode.kAbsolute).getVoltage();
+    return pitchMotor.getAnalog(Mode.kAbsolute).getVoltage();
   }
   public double getAbsEncoderPosition() {
     //return motor.getAnalog(Mode.kAbsolute).getVoltage();
-    return motor2.getAnalog(Mode.kAbsolute).getPosition();
+    return pitchMotor.getAnalog(Mode.kAbsolute).getPosition();
   }
 
 
@@ -104,7 +108,7 @@ public class MotorSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     //motor.set(0.3);
-    System.out.println(motor.get());
+    System.out.println(winchMotor.get());
   }
 
   @Override
