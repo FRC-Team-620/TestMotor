@@ -47,6 +47,9 @@ public class MotorSubsystem extends SubsystemBase {
   public void setSpeed2(double speed) {
     pitchMotor.set(speed);
   }
+  public void setSpeed3(double speed) {
+    grabberMotor.set(speed);
+  }
   public double getEncoderCount() {
     return winchMotor.getEncoder().getPosition();
   }
