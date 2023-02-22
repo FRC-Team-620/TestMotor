@@ -55,16 +55,18 @@ public class MotorCommand extends CommandBase {
     double max = Math.max(controller.getRightTriggerAxis(),controller.getLeftTriggerAxis());
     double min = Math.min(controller.getRightTriggerAxis(),controller.getLeftTriggerAxis());
     netSpeed = max-min;
+    
     if(max == controller.getLeftTriggerAxis()){
       netSpeed = -netSpeed;
     }
-    motorSubsystem.setSpeed(netSpeed);
+
+    motorSubsystem.setWinchSpeed(netSpeed);
     // System.out.println(motorSubsystem.getEncoderCount());
     SmartDashboard.putNumber("PotPosition", motorSubsystem.getAbsEncoderPosition());
     double exp = -114.440596296 * (motorSubsystem.getAbsEncoderPosition() - 2.49) - 63;
     SmartDashboard.putNumber("Expected Angle", exp);
-    motorSubsystem.setSpeed2(controller.getLeftY());
-    motorSubsystem.setSpeed3(controller.getRightY());
+    motorSubsystem.setPitchSpeed(controller.getLeftY());
+    motorSubsystem.setGrabberSpeed(controller.getRightY());
 
     //motorSubsystem.setSpeed(controller.getRightY());
   }

@@ -40,48 +40,57 @@ public class MotorSubsystem extends SubsystemBase {
     compressor.enableDigital();
   }
 
-  public void setSpeed(double speed){
+  public void setWinchSpeed(double speed){
     winchMotor.set(speed);
-    
   }
-  public void setSpeed2(double speed) {
+
+  public void setPitchSpeed(double speed) {
     pitchMotor.set(speed);
   }
-  public void setSpeed3(double speed) {
+
+  public void setGrabberSpeed(double speed) {
     grabberMotor.set(speed);
   }
+
   public double getEncoderCount() {
     return winchMotor.getEncoder().getPosition();
   }
+
   public void setSolenoid1(boolean state) {
     solenoid1.set(state);
   }
+
   public void setSolenoid2(boolean state) {
     solenoid2.set(state);
   }
+
   public boolean getStateSolenoid1() {
     return solenoid1.get();
   }
+
   public boolean getStateSolenoid2() {
     return solenoid2.get();
   }
+
   public double getPotVoltage() {
     //return motor.getAnalog(Mode.kAbsolute).getVoltage();
     return winchMotor.getAnalog(Mode.kAbsolute).getVoltage();
   }
+
   public double getPotPosition() {
     //return motor.getAnalog(Mode.kAbsolute).getVoltage();
     return winchMotor.getAnalog(Mode.kAbsolute).getPosition();
   }
+
   public double getAbsEncoderVoltage() {
     //return motor.getAnalog(Mode.kAbsolute).getVoltage();
     return pitchMotor.getAnalog(Mode.kAbsolute).getVoltage();
   }
+
   public double getAbsEncoderPosition() {
     //return motor.getAnalog(Mode.kAbsolute).getVoltage();
     return pitchMotor.getAnalog(Mode.kAbsolute).getPosition();
   }
-
 
   /**
    * Example command factory method.
