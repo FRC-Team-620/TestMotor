@@ -42,25 +42,23 @@ public class MotorCommand extends CommandBase {
     //motorSubsystem.setSpeed(MathUtil.clamp(pidLoop.calculate(motorSubsystem.getEncoderCount()), -1, 1));
     //System.out.println("WORKKKKKK");
     //motorSubsystem.setSpeed(0.4);
-    if (controller.a().getAsBoolean()) {
-      motorSubsystem.setSolenoid1(!motorSubsystem.getStateSolenoid1());
-    }
-    if (controller.b().getAsBoolean()) {
-      motorSubsystem.setSolenoid2(!motorSubsystem.getStateSolenoid2());
-    }
-    // if(controller.x().getAsBoolean()) {
-    //   motorSubsystem.setSpeed(-0.4);
+    // if (controller.a().getAsBoolean()) {
+    //   System.out.println("A");
+    //   motorSubsystem.setSolenoid1(!motorSubsystem.getStateSolenoid1());
     // }
-    // else {
-    //   double netSpeed = 0;//;
-    //   double max = Math.max(controller.getRightTriggerAxis(),controller.getLeftTriggerAxis());
-    //   double min = Math.min(controller.getRightTriggerAxis(),controller.getLeftTriggerAxis());
-    //   netSpeed = max-min;
-    //   if(max == controller.getLeftTriggerAxis()){
-    //     netSpeed = -netSpeed;
-    //   }
-    //   motorSubsystem.setSpeed(netSpeed);
+    // if (controller.b().getAsBoolean()) {
+    //   System.out.println("B");
+    //   motorSubsystem.setSolenoid2(!motorSubsystem.getStateSolenoid2());
     // }
+    
+    double netSpeed = 0;
+    double max = Math.max(controller.getRightTriggerAxis(),controller.getLeftTriggerAxis());
+    double min = Math.min(controller.getRightTriggerAxis(),controller.getLeftTriggerAxis());
+    netSpeed = max-min;
+    if(max == controller.getLeftTriggerAxis()){
+      netSpeed = -netSpeed;
+    }
+    motorSubsystem.setSpeed(netSpeed);
     // System.out.println(motorSubsystem.getEncoderCount());
     SmartDashboard.putNumber("PotPosition", motorSubsystem.getAbsEncoderPosition());
     double exp = -114.440596296 * (motorSubsystem.getAbsEncoderPosition() - 2.49) - 63;

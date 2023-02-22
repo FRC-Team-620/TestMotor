@@ -19,8 +19,8 @@ public class MotorSubsystem extends SubsystemBase {
   private CANSparkMax winchMotor = new CANSparkMax(6, MotorType.kBrushless);
   private CANSparkMax pitchMotor = new CANSparkMax(5, MotorType.kBrushless);
   private CANSparkMax grabberMotor = new CANSparkMax(7, MotorType.kBrushless);
-  private Solenoid solenoid1 = new Solenoid(42, PneumaticsModuleType.CTREPCM, 0);
-  private Solenoid solenoid2 = new Solenoid(42, PneumaticsModuleType.CTREPCM, 1);
+  private Solenoid solenoid1 = new Solenoid(42, PneumaticsModuleType.REVPH, 0);
+  private Solenoid solenoid2 = new Solenoid(42, PneumaticsModuleType.REVPH, 1);
   private Compressor compressor = new Compressor(42, PneumaticsModuleType.REVPH);
 
 
@@ -41,7 +41,7 @@ public class MotorSubsystem extends SubsystemBase {
   }
 
   public void setSpeed(double speed){
-    //motor.set(speed);
+    winchMotor.set(speed);
     
   }
   public void setSpeed2(double speed) {
@@ -111,7 +111,7 @@ public class MotorSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     //motor.set(0.3);
-    System.out.println(winchMotor.get());
+    //System.out.println(winchMotor.get());
   }
 
   @Override
