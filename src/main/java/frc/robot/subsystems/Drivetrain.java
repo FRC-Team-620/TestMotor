@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+import com.playingwithfusion.TimeOfFlight;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+//import com.playingwithfusion.TimeOfFlight;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -44,7 +46,7 @@ public class Drivetrain extends SubsystemBase {
 			MotorType.kBrushless);
 	private CANSparkMax rightRearMotor = new CANSparkMax(4,
 			MotorType.kBrushless);
-
+	private TimeOfFlight laser = new TimeOfFlight(0);
 
 	// private double commandedXSpeed = 0.0;
 	// private double commandedZRotation = 0.0;
