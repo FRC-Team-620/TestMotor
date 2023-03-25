@@ -5,6 +5,9 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.MotorSubsystem;
+
+import java.util.function.Supplier;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class MotorCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private MotorSubsystem motorSubsystem;
-  private CommandXboxController controller;
+  private Supplier<Double> speedSupplier;
   //private PIDController pidLoop = new PIDController(1, 0, 0);
 
   /**
@@ -23,9 +26,9 @@ public class MotorCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public MotorCommand(MotorSubsystem motorSubsystem, CommandXboxController controller) {
+  public MotorCommand(MotorSubsystem motorSubsystem, Supplier<Double> speedSupplier) {
     this.motorSubsystem = motorSubsystem;
-    this.controller = controller;
+    this.speedSupplier = speedSupplier;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(motorSubsystem);
@@ -38,40 +41,9 @@ public class MotorCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //pidLoop.setSetpoint(1);
-    //motorSubsystem.setSpeed(MathUtil.clamp(pidLoop.calculate(motorSubsystem.getEncoderCount()), -1, 1));
-    //System.out.println("WORKKKKKK");
-    //motorSubsystem.setSpeed(0.4);
-    // if (controller.a().getAsBoolean()) {
-    //   System.out.println("A");
-    //   motorSubsystem.setSolenoid1(!motorSubsystem.getStateSolenoid1());
-    // }
-    // if (controller.b().getAsBoolean()) {
-    //   System.out.println("B");
-    //   motorSubsystem.setSolenoid2(!motorSubsystem.getStateSolenoid2());
-    // }
-    
-    double netSpeed = 0;
-    double max = Math.max(controller.getRightTriggerAxis(),controller.getLeftTriggerAxis());
-    double min = Math.min(controller.getRightTriggerAxis(),controller.getLeftTriggerAxis());
-    netSpeed = max-min;
-    
-    if(max == controller.getLeftTriggerAxis()){
-      netSpeed = -netSpeed;
-    }
-
-    motorSubsystem.setWinchSpeed(netSpeed);
-    // System.out.println(motorSubsystem.getEncoderCount());
-    SmartDashboard.putNumber("PotPosition", motorSubsystem.getAbsEncoderPosition());
-    double exp = -114.440596296 * (motorSubsystem.getAbsEncoderPosition() - 2.49) - 63;
-    SmartDashboard.putNumber("Expected Angle", exp);
-    motorSubsystem.setPitchSpeed(controller.getLeftY());
-    motorSubsystem.setGrabberSpeed(controller.getRightY());
-
-    //motorSubsystem.setSpeed(controller.getRightY());
+    this.motorSubsystem.setWristMotor(this.speedSupplier.get());
   }
   
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {

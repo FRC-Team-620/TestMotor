@@ -5,9 +5,9 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.DriveCommand;
+// import frc.robot.commands.DriveCommand;
 import frc.robot.commands.MotorCommand;
-import frc.robot.subsystems.Drivetrain;
+// import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.MotorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -24,7 +24,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final MotorSubsystem motorSubsystem;
 
-  private final Drivetrain drivetrain;
+  // private final Drivetrain drivetrain;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -37,10 +37,13 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     motorSubsystem = new MotorSubsystem();
-    drivetrain = new Drivetrain();
+    // drivetrain = new Drivetrain();
 
-    motorSubsystem.setDefaultCommand(new MotorCommand(motorSubsystem, m_operatorController));
-    drivetrain.setDefaultCommand(new DriveCommand(drivetrain, m_driverController));
+    motorSubsystem.setDefaultCommand(new MotorCommand(
+      motorSubsystem, 
+      m_operatorController::getLeftY)
+    );
+    // drivetrain.setDefaultCommand(new DriveCommand(drivetrain, m_driverController));
   }
 
   /**
@@ -53,15 +56,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    //m_driverController.b().whileTrue(motorSubsystem.exampleMethodCommand());
-    m_operatorController.a().onTrue(new InstantCommand(() ->
-		motorSubsystem.setSolenoid1(!motorSubsystem.getStateSolenoid1())));
-    m_operatorController.b().onTrue(new InstantCommand(() ->
-		motorSubsystem.setSolenoid2(!motorSubsystem.getStateSolenoid2())));
+    
   }
 
   /**
