@@ -7,20 +7,17 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.SparkMaxAnalogSensor.Mode;
 
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class MotorSubsystem extends SubsystemBase {
 
   CANSparkMax wristMotor = new CANSparkMax(8, MotorType.kBrushless);
+  RelativeEncoder wristEncoder = this.wristMotor.getEncoder();
   TalonSRX wristAbsoluteEncoder = new TalonSRX(9);
 
   double wristEncoderPosition;
@@ -39,6 +36,7 @@ public class MotorSubsystem extends SubsystemBase {
   public void periodic() {
     this.updateWristAbsoluteEncoder();
 
+    SmartDashboard.putNumber("MotorSubsystem/wristRelativeEncoder", this.wristEncoder.getPosition()); 
     SmartDashboard.putNumber("MotorSubsystem/wristAbsoluteEncoder", this.getWristAbsoluteEncoderPosition());
   }
 
