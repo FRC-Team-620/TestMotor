@@ -17,7 +17,7 @@ public class SingleMotorCommand extends CommandBase{
     @Override
     public void execute() {
         // TODO Auto-generated method stub
-        super.execute();
+        this.singleMotorSubsystem.setSpeed(control.getRightTriggerAxis());
     }
 
 
